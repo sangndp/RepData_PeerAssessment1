@@ -6,7 +6,6 @@ output:
 ---
 # Reproducible Research: Peer Assessment 1
 
-## Loading and preprocessing the data
 
 ## Loading and preprocessing the data
 ```{r}
@@ -17,6 +16,7 @@ data <- read.csv("activity.csv", header = TRUE)
 ```
 
 ## What is mean total number of steps taken per day?
+```{r}
 data_date <- ddply(data, c("date"), summarize, steps = sum(steps))
 
 plot1 <- function(){
@@ -28,9 +28,10 @@ plot1()
 
 mean_steps <- mean(data_date$steps, na.rm = TRUE)
 median_steps <- median(data_date$steps, na.rm = TRUE)
-
+{r}
 
 ## What is the average daily activity pattern?
+```{r}
 data_remove_na <- data[complete.cases(data),]
 data_interval <- ddply(data_remove_na, c("interval"), summarize, steps = sum(steps) / 61)
 
@@ -39,12 +40,13 @@ plot2 <- function(){
     ggtitle("The average number of steps taken by 5-minutes interval")
 }
 plot2()
-
+{r}
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
-data_interval[which.max(data_interval$steps),]
+```{r} data_interval[which.max(data_interval$steps),] {r}
 
 
 ## Imputing missing values
+```{r}
 sum(!complete.cases(data))
 
 data_new <- data
@@ -59,9 +61,10 @@ plot3()
 
 mean_new_steps <- mean(data_new_date$steps, na.rm = TRUE)
 median_new_steps <- median(data_new_date$steps, na.rm = TRUE)
-
+{r}
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r}
 data_new <- data
 data_new$steps[is.na(data_new$steps)] <- mean(data_new$steps, na.rm = TRUE)
 data_interval <- ddply(data_remove_na, c("interval"), summarize, steps = sum(steps) / 61)
@@ -79,3 +82,4 @@ plot4 <- function(){
          xlab = "Number of Steps", ylab = "Interval")
 }
 plot4()
+{r}
