@@ -39,7 +39,7 @@ median_steps
 ```
 
 ```
-## [1] 10765
+## [1] 10766
 ```
 
 ## What is the average daily activity pattern?
@@ -60,12 +60,19 @@ the maximum number of steps?
 ```{r}
 data_interval[which.max(data_interval$steps),]
 ```
+```
+##     interval    steps
+## 104      835 206.1698
+```
+
 ## Imputing missing values
 The number of missing values
 ```{r}
 sum(!complete.cases(data))
 ```
-
+```
+## [1] 2304
+```
 ```{r}
 data_new <- data
 data_new$steps[is.na(data_new$steps)] <- mean(data_new$steps, na.rm = TRUE) # na = average steps of interval
