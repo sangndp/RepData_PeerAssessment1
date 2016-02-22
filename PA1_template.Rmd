@@ -4,13 +4,17 @@ output:
   html_document:
     keep_md: true
 ---
-
+# Reproducible Research: Peer Assessment 1
 
 ## Loading and preprocessing the data
+
+## Loading and preprocessing the data
+```{r}
 if(!file.exists('activity.csv')){
     unzip('activity.zip')
 }
 data <- read.csv("activity.csv", header = TRUE)
+```
 
 ## What is mean total number of steps taken per day?
 data_date <- ddply(data, c("date"), summarize, steps = sum(steps))
@@ -36,7 +40,7 @@ plot2 <- function(){
 }
 plot2()
 
-# Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 data_interval[which.max(data_interval$steps),]
 
 
