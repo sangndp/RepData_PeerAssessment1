@@ -90,7 +90,7 @@ mean_new_steps
 median_new_steps <- median(data_new_date$steps, na.rm = TRUE)
 ```
 ```{r}
-median_new__steps
+median_new_steps
 ```
 
 ```
