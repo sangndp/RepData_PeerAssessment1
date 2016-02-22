@@ -79,5 +79,48 @@ plot3()
 ![plot of chunk unnamed-chunk-3](figures/plot3_assign3.png) 
 ```{r}
 mean_new_steps <- mean(data_new_date$steps, na.rm = TRUE)
+```
+```{r}
+mean_new_steps
+```
+```
+## [1] 10766.19
+```
+```{r}
 median_new_steps <- median(data_new_date$steps, na.rm = TRUE)
 ```
+```{r}
+median_new__steps
+```
+
+```
+## [1] 10766.19
+```
+Median values is a little bit higher after imputing missing data and the mean does not change. 
+The reason is that in the original data, there are some days with `steps` values `NA` for 
+any `interval`. The total number of steps taken in such days are set to 0s by
+default. However, after replacing missing `steps` values with the mean `steps`
+of `interval` value, these 0 values are replaced by the average steps
+of total number of steps taken each day.
+
+## Are there differences in activity patterns between weekdays and weekends?
+```{r}
+data_new <- data
+data_new$steps[is.na(data_new$steps)] <- mean(data_new$steps, na.rm = TRUE)
+data_interval <- ddply(data_remove_na, c("interval"), summarize, steps = sum(steps) / 61)
+data_new$date <- as.Date(data_new_date$date)
+
+data_new$Weekday <- weekdays(data_new$date)
+weekday_list <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+data_new$Weekday <- factor(data_new$Weekday %in% weekday_list, 
+                                levels = c(TRUE, FALSE), labels = c("Weekday", "Weekend"))
+
+data_new_interval <- ddply(data_new, c("Weekday","interval"), summarize, steps = sum(steps) / 61)
+plot4 <- function(){
+  xyplot(steps ~interval | factor(Weekday), data = data_new_interval, type = "l",
+         main = "The average number of steps taken by 5-minutes interval",
+         xlab = "Number of Steps", ylab = "Interval")
+}
+plot4()
+```
+![plot of chunk unnamed-chunk-4](figures/plot4_assign1.png) 
